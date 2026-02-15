@@ -432,10 +432,12 @@ static enum zmk_transport get_selected_transport(void) {
             LOG_DBG("USB is preferred and ready");
             return ZMK_TRANSPORT_USB;
         }
+#ifndef CONFIG_ZMK_ENDPOINT_DISABLE_FALLBACK
         if (is_ble_ready()) {
             LOG_DBG("USB is not ready. Falling back to BLE");
             return ZMK_TRANSPORT_BLE;
         }
+#endif
         break;
 
     case ZMK_TRANSPORT_BLE:
@@ -443,10 +445,12 @@ static enum zmk_transport get_selected_transport(void) {
             LOG_DBG("BLE is preferred and ready");
             return ZMK_TRANSPORT_BLE;
         }
+#ifndef CONFIG_ZMK_ENDPOINT_DISABLE_FALLBACK
         if (is_usb_ready()) {
             LOG_DBG("BLE is not ready. Falling back to USB");
             return ZMK_TRANSPORT_USB;
         }
+#endif
         break;
     }
 
